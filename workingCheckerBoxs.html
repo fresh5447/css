@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Canvas Drawing Rectangles</title>
+    <script type="text/javascript"> <!--
+
+    window.addEventListener('load', function () {
+        // Step #1: Get the canvas element
+        var elem = document.getElementById('myCanvas');
+        if (!elem || !elem.getContext) {
+            return;
+        }
+        // Step #2: Get the canvas 2d context
+        var context = elem.getContext('2d');
+        if (!context) {
+            return;
+        }
+        // Step #3: INSERT YOUR CANVAS CODE HERE
+        var rectWidth=50, rectHeight=50;
+        //context.fillStyle = "#f00";
+        //context.fillRect(0,0, rectWidth,rectHeight);
+        //context.fillStyle = "#0f0";
+        //context.fillRect(40,40, rectWidth,rectHeight);
+        // a blue rectangle:
+        //context.fillStyle = "#00f";
+        //context.fillRect(80,80, rectWidth,rectHeight);
+        var basePointX =0 ;
+        var basePointY = 0 ;
+        var color="#f00" ;
+        var offsetX , rowCount=20 , colCount=20;
+        var colors= ["#e74c3c", "#e67e22","#c0392b","#2980b9"];
+
+
+        for(var j = 0 ; j<rowCount; j++){
+
+            offsetX = 0;
+            for(var i=0; i<colCount; i++) {
+
+                offsetX=i*rectWidth;
+                context.fillStyle= colors[(i+j)%colors.length];
+
+                context.fillRect(basePointX+offsetX,
+                                basePointY + rectHeight*j,
+                        rectWidth, rectHeight);
+                console.log(basePointX, basePointY, offsetX)
+            }
+        }
+        elem.addEventListener("mousedown", mouseDown, false);
+
+
+    function mouseDown(event) {
+        canvasX = event.pageX;
+        canvasX = Math.floor(canvasX / rectWidth) + 1;
+        canvasY = event.pageY;
+        canvasY = Math.floor(canvasY / rectHeight) + 1;
+        console.log("X: " + canvasX + " Y: " + canvasY);
+    }
+    });
+    // --></script>
+</head>
+
+<body>
+<canvas id="myCanvas" width="1900" height="1600">
+</canvas>
+</body>
+</html>

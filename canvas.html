@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Canvas Drawing Rectangles</title>
+
+        <script type="text/javascript"><!--
+            window.addEventListener('load', function () {
+
+                // Step #1: Get the canvas element
+                var elem = document.getElementById('myCanvas');
+                if (!elem || !elem.getContext) {
+                    return;
+                }
+
+                // Step #2: Get the canvas 2d context
+                var context = elem.getContext('2d');
+                if (!context) {
+                    return;
+                }
+
+
+                // Step #3: INSERT YOUR CANVAS CODE HERE
+                // THREE RECTANGLES
+              var rectWidth=50, rectHeight=50;
+//                context.fillStyle = "#f00";
+//                context.fillRect(0,0, rectWidth,rectHeight);
+//
+//                context.fillStyle = "#0f0";
+//                context.fillRect(40,40, rectWidth, rectHeight);
+//
+//                context.fillStyle = "#00f";
+//                context.fillRect(80,80, rectWidth, rectHeight);
+//
+
+                var i = 0;
+
+                for(var i=0; i<10; i++){
+
+                    if(i % 2 == 0){
+                        context.fillStyle = "#f00";
+                    } else {
+                        context.fillStyle = "#00f";
+
+                    }
+                    context.fillRect(i*rectWidth,  50, rectWidth, rectHeight);
+
+                }
+                for(var i=0; i<10; i++){
+
+                    if(i % 2 == 0){
+                        context.fillStyle = "#f00";
+                    } else {
+                        context.fillStyle = "#00f";
+
+                    }
+                    context.fillRect(50,  i*rectWidth, rectHeight, rectWidth);
+
+                }
+
+
+            });
+    // --></script>
+</head>
+
+<body>
+
+<canvas id="myCanvas" width="1000" height="1000">
+</canvas>
+
+</body>
+</html>
+
+

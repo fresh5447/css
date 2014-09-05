@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Canvas Drawing Rectangles</title>
+
+    <script type="text/javascript"><!--
+    window.addEventListener('load', function () {
+
+        // Step #1: Get the canvas element
+        var elem = document.getElementById('myCanvas');
+        if (!elem || !elem.getContext) {
+            return;
+        }
+
+        // Step #2: Get the canvas 2d context
+        var context = elem.getContext('2d');
+        if (!context) {
+            return;
+        }
+
+
+        // Step #3: INSERT YOUR CANVAS CODE HERE
+        // THREE RECTANGLES
+        var rectWidth=100, rectHeight=100;
+                context.fillStyle = "#f00";
+                context.fillRect(0,0, rectWidth,rectHeight);
+
+                context.fillStyle = "#0f0";
+                context.fillRect(200,0, rectWidth, rectHeight);
+
+                context.fillStyle = "#00f";
+                context.fillRect(100,0, rectWidth, rectHeight);
+
+       var rectWidth=100, rectHeight=100;
+                context.fillStyle = "#f00";
+                context.fillRect(0,0, rectWidth,rectHeight);
+
+                context.fillStyle = "#0f0";
+                context.fillRect(0,200, rectWidth, rectHeight);
+
+                context.fillStyle = "#00f";
+                context.fillRect(0,100, rectWidth, rectHeight);
+
+        var rectWidth=100, rectHeight=100;
+                context.fillStyle = "#f00";
+                context.fillRect(0,0, rectWidth,rectHeight);
+
+                context.fillStyle = "#0f0";
+                context.fillRect(0,200, rectWidth, rectHeight);
+
+                context.fillStyle = "#00f";
+                context.fillRect(0,100, rectWidth, rectHeight);
+
+
+
+
+
+//        var z = 0;
+//
+//        for(var i=0; i<500; i++){
+//
+//            context.fillRect(i,  i, rectWidth, rectHeight);
+//
+//            z = Math.floor((Math.random() * 1000) + 1);
+//            console.log(z);
+//
+//            if(i % 4 == 0){
+//                context.fillStyle = "#9b59b6";
+//            } else if ( i % 4 == 1) {
+//                context.fillStyle = "#f39c12";
+//            } else if (i % 4 == 2) {
+//                context.fillStyle = "#3498db";
+//            } else {
+//                context.fillStyle = "#3498db";
+//            }
+//
+//        }
+
+
+    });
+    // --></script>
+</head>
+
+<body>
+
+<canvas id="myCanvas" width="800" height="500">
+</canvas>
+
+</body>
+</html>

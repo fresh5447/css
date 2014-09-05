@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<body onload="init()">
+    <meta charset="utf-8">
+    <title>Canvas Drawing Rectangles</title>
+    <script type="text/javascript"> <!--
+
+
+
+    <body onload="init()">
+            <script>
+            function init() {
+                var canvas = document.getElementById("canvas");
+                canvas.addEventListener("mousedown", mouseDown, false);
+            }
+
+    function mouseDown(event) {
+        canvasX = event.pageX;
+        canvasY = event.pageY;
+        console.log("X: "+canvasX+" Y: "+canvasY);
+    }
+
+
+
+    window.addEventListener('load', function () {
+        // Step #1: Get the canvas element
+        var elem = document.getElementById('myCanvas');
+        if (!elem || !elem.getContext) {
+            return;
+        }
+        // Step #2: Get the canvas 2d context
+        var context = elem.getContext('2d');
+        if (!context) {
+            return;
+        }
+        // Step #3: INSERT YOUR CANVAS CODE HERE
+        var rectWidth=50, rectHeight=50;
+
+        var basePointX =200 ;
+        var basePointY = 50 ;
+        var color="#f00" ;
+        var offsetX , rowCount=10 , colCount=10;
+        var colors= ["#00f", "#95a5a6","#ff0", "#e74c3c", "#16a085", "#9b59b6"];
+
+        for(var j = 0 ; j<rowCount; j++){
+            offsetX = 0;
+            for(var i=0; i<colCount; i++) {
+                // 1) specify the upper-left vertex
+                offsetX=i*rectWidth;
+                context.fillStyle= colors[(i+j)%colors.length];
+                console.log( "  "+ offsetX );
+                // 2) specify the width and height
+                context.fillRect(basePointX+offsetX,
+                                basePointY + rectHeight*j,
+                        rectWidth, rectHeight);
+            }
+        }
+
+    });
+    // --></script>
+</head>
+
+
+<canvas id="myCanvas" width="1900" height="1600">
+</canvas>
+</body>
+</html>

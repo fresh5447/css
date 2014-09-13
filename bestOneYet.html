@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Canvas Drawing Rectangles</title>
+    <script type="text/javascript">
+        window.addEventListener('load', function () {
+            // Step #1: Get the canvas element
+            var elem = document.getElementById('myCanvas');
+            if (!elem || !elem.getContext) {
+                return;
+            }
+            // Step #2: Get the canvas 2d context
+            var context = elem.getContext('2d');
+            if (!context) {
+                return;
+            }
+            // Step #3: INSERT YOUR CANVAS CODE HERE
+            var rectWidth=20, rectHeight=20;
+            var basePointX =0 ;
+            var basePointY =0 ;
+            var color="#f00" ;
+            var offsetX , rowCount=100 , colCount=100;
+            var colors= ["#1abc9c", "#95a5a6","#f1c40f", "#16a085", "#9b59b6", "#e74c3c"];
+
+            for(var j = 0 ; j<rowCount; j++){
+                offsetX = 0;
+                for(var i=0; i<colCount; i++) {
+                    // 1) specify the upper-left vertex
+                    offsetX=i*rectWidth;
+                    context.fillStyle= colors[(i+j)%colors.length];
+                    console.log( "  "+ offsetX );
+                    // 2) specify the width and height
+                    context.fillRect(basePointX+offsetX,
+                                    basePointY + rectHeight*j,
+                            rectWidth, rectHeight);
+                }
+            }
+            elem.addEventListener("mousedown", mouseDown, true);
+            function mouseDown(event) {
+                canvasX = event.pageX;
+                canvasY = event.pageY;
+                console.log("X: "+canvasX+" Y: "+canvasY);
+                var row= (Math.floor(((canvasY-basePointY)/rectWidth))+1) ;
+                var col= (Math.floor(((canvasX-basePointX)/rectWidth))+1);
+                console.log( " Row:" + row +" Col: " + col);
+                //drawSmilingFace((col-1)*rectWidth+basePointY,(row-1)*rectHeight+basePointX,rectWidth/2, rectHeight/2);
+                //drawSmilingFace();
+                drawCircle((col-1)*rectWidth+basePointY,(row-1)*rectHeight+basePointX, rectWidth, row, col )
+                // return ;
+            }
+
+            function drawCheckerBoard(baseX, baseY, wid, hei ) {
+                var w=wid, h=hei;
+                var x =baseX ;
+                var y =baseY ;
+                var offsetX , rowCount=2 , colCount=2;
+                var colors= ["#2c3e50", "#95a5a6"];
+                for(var j = 0 ; j<rowCount; j++){
+                    offsetX = 0;
+                    for(var i=0; i<colCount; i++) {
+                        // 1) specify the upper-left vertex
+                        offsetX=i*w;
+                        context.fillStyle= colors[(i+j)%colors.length];
+                        // 2) specify the width and height
+                        context.fillRect(x+offsetX,
+                                        y + h*j,
+                                w, h);
+                    }
+                }
+
+            }
+            function drawSmilingFace(baseX, baseY, wid, hei){
+                context.beginPath();
+                context.arc(75+baseX,75+baseY,50,0,Math.PI*2,true); // Outer circle
+                context.moveTo(110+baseX,75+baseX);
+                context.arc(75+baseX,75+baseY,35,0,Math.PI,false);   // Mouth (clockwise)
+                context.moveTo(65+baseX,65+baseY);
+                context.arc(60+baseX,65+baseY,5,0,Math.PI*2,true);  // Left eye
+                // context.moveTo(95+baseX,65+baseY);
+                context.arc(90+baseX,65+baseY,5,0,Math.PI*2,true);  // Right eye
+                context.stroke();
+                context.endPath();
+
+            }
+            var x = 0;
+            function drawTriangle(ctx , xbase, ybase , row , col){
+                // Filled Shadow triangle
+                var shadowColor = "#34495e";
+                var shadowX=7, shadowY=7;
+                ctx.beginPath();
+                ctx.moveTo(50+xbase+shadowX,50+ybase+shadowY);
+                ctx.lineTo(155+xbase+shadowX,75+ybase+shadowY);
+                ctx.lineTo(75+xbase+shadowX,155+ybase+shadowY);
+                ctx.fillStyle= shadowColor;
+                ctx.fill();
+
+                // colored triangle
+                ctx.beginPath();
+                ctx.moveTo(50+xbase,50+ybase);
+                ctx.lineTo(155+xbase,75+ybase);
+                ctx.lineTo(75+xbase,155+ybase);
+                ctx.fillStyle= colors[(row+col+x)%colors.length];
+                ctx.fill();
+                x++;
+            }
+            function drawCircle(xbase,ybase, wid, row , col ){
+                context.beginPath();
+                context.arc(xbase +wid/2, ybase+wid/2, wid/2, 0, 2 * Math.PI, false);
+                context.fillStyle =colors[(row+col+x)%colors.length];
+                context.fill();
+                context.lineWidth = 5;
+                context.strokeStyle = '#fff';
+                context.stroke();
+                x++;
+
+            }
+        });
+    </script>
+</head>
+
+<body>
+<div>
+    <canvas id="myCanvas" width="2000" height="2000">
+    </canvas>
+</div>
+</body>
+</html>

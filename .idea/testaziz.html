@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Canvas Drawing Rectangles</title>
+    <script type="text/javascript"> <!--
+
+    window.addEventListener('load', function () {
+        // Step #1: Get the canvas element
+        var elem = document.getElementById('myCanvas');
+        if (!elem || !elem.getContext) {
+            return;
+        }
+        // Step #2: Get the canvas 2d context
+        var context = elem.getContext('2d');
+        if (!context) {
+            return;
+        }
+
+        // Step #3: INSERT YOUR CANVAS CODE HERE
+        var rectWidth=100, rectHeight=100;
+
+        var basePointX =0 ;
+        var basePointY = 0 ;
+        var color="#f00" ;
+        var offsetX , rowCount=3, colCount=3;
+        var colors= ["#e74c3c", "#e67e22","#c0392b","#2980b9"];
+
+        var arrr = new Array(rowCount); // represents the state of the checkerboard
+
+        for(var x=0; x<rowCount; x++){ // initialize the array
+            arrr[x]=new Array(colCount);
+            for(var y=0; y<colCount; y++){
+                arrr[x][y]= -1;
+            }
+        }
+
+        /*
+        var checkWin = function() {
+            var allEqual = true;
+            // check of one row is identical
+            for (var row = 0; row < rowCount; row++) {
+                var leftMost = arrr[row][0];
+
+                for (var col = 1; col < colCount; col++) {
+                    if (arrr[row][col] != leftMost) {
+                        allEqual = false;
+                        break;
+                    }
+                }
+
+                if (allEqual == true) {
+                    return row;
+                }
+            }
+
+            return allEqual;
+
+
+            for (var j = 0; j < rowCount; j++) {
+
+                offsetX = 0;
+                for (var i = 0; i < colCount; i++) {
+
+                    offsetX = i * rectWidth;
+                    context.fillStyle = colors[(i + j) % colors.length];
+
+                    context.fillRect(basePointX + offsetX,
+                                    basePointY + rectHeight * j,
+                            rectWidth, rectHeight);
+                    console.log(basePointX, basePointY, offsetX)
+                }
+            }
+        }
+*/
+
+        elem.addEventListener("mousedown", mouseDown, false);
+
+        var player = 1;
+
+        function mouseDown(event) {
+            canvasX = event.pageX;
+            canvasY = event.pageY;
+            var row= (Math.floor(((canvasY-basePointY)/rectWidth))+1) ;
+            var col= (Math.floor(((canvasX-basePointX)/rectWidth))+1);
+
+            console.log( " Row:" + row +" Col: " + col);
+            //drawSmilingFace((col-1)*rectWidth+basePointY,(row-1)*rectHeight+basePointX,rectWidth/2, rectHeight/2);
+            //drawSmilingFace();
+            if(arrr[row-1][col-1] == -1){  // test if the space is free
+//                if(player){ // player 1
+//                    drawX((col-1)*rectWidth+basePointY,(row-1)*rectHeight+basePointX, rectWidth, row, col )
+//                } else { // player2
+//                    drawO((col-1)*rectWidth+basePointY,(row-1)*rectHeight+basePointX, rectWidth, row, col )
+//                }
+                drawX((col-1)*rectWidth+basePointY,(row-1)*rectHeight+basePointX, rectWidth, row, col )
+
+                player=1-player;
+                if( checkWin()) {
+
+                    alert("You won");
+                };
+            }
+
+            // return ;
+        }
+
+
+        function drawX(xbase,ybase, wid, row , col ) {
+
+            var color = colors[(row+col+1)%colors.length];
+            context.fillStyle = color ;
+
+            //line goes left - right
+            context.beginPath();
+            context.moveTo((col-1)*rectWidth+basePointY,
+                            (row-1)*rectHeight+basePointX);
+            context.lineTo(((col-1)*rectWidth+basePointY) + rectWidth,
+                            ((row-1)*rectHeight+basePointX) + rectHeight);
+            context.stroke();
+
+            //line goes right - left
+            context.beginPath();
+            context.moveTo((col-1)*rectWidth+basePointY + rectWidth,
+                            (row-1)*rectHeight+basePointX);
+            context.lineTo(((col-1)*rectWidth+basePointY),
+                            ((row-1)*rectHeight+basePointX) + rectHeight);
+            context.stroke();
+
+            arrr[row-1][col-1] = 1;
+
+        }
+
+        var x = 0;
+        function drawO(xbase,ybase, wid, row , col ){
+            // fill shadow
+            var shadowColor = "#34495e ";
+            var shadowX=7, shadowY=7;
+            context.beginPath();
+            context.arc(xbase+shadowX+wid/2, shadowY+ybase+wid/2,(wid-shadowX)/3, 0, 2 * Math.PI, false);
+            context.fillStyle =shadowColor;
+            context.fill();
+            // fil original Circle
+            context.beginPath();
+            context.arc(xbase +wid/2, ybase+wid/2, (wid-shadowX)/3, 0, 2 * Math.PI, false);
+            context.fillStyle =colors[(row+col+x)%colors.length];
+            context.fill();
+            // context.lineWidth = 5;
+            context.strokeStyle = '#003300 ';
+            context.stroke();
+            x++;
+            console.log("drawO");
+
+            arrr[row-1][col-1] = 0;
+        }
+    });
+    // --></script>
+</head>
+
+<body>
+<canvas id="myCanvas" width="1900" height="1600">
+</canvas>
+</body>
+</html>

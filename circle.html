@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Snowman</title>
+    <script type="text/javascript"> <!--
+    window.addEventListener('load', function () {
+        // Step #1: Get the canvas element
+        var elem = document.getElementById('myCanvas');
+        if (!elem || !elem.getContext) {
+            return;
+        }
+        // Step #2: Get the canvas 2d context
+        var context = elem.getContext('2d');
+        if (!context) {
+            return;
+        }
+        // Step #3: INSERT YOUR CANVAS CODE HERE
+        context.beginPath();
+        context.arc(255,265,80,0,2*Math.PI);
+        context.stroke();
+    });
+    var x = 0;
+    function drawCircle(xbase,ybase, wid, row , col ){
+        // fill shadow
+        var shadowColor = "#34495e ";
+        var shadowX=7, shadowY=7;
+        context.beginPath();
+        context.arc(xbase+shadowX+wid/2, shadowY+ybase+wid/2,(wid-shadowX)/3, 0, 2 * Math.PI, false);
+        context.fillStyle =shadowColor;
+        context.fill();
+        // fil original Circle
+        context.beginPath();
+        context.arc(xbase +wid/2, ybase+wid/2, (wid-shadowX)/3, 0, 2 * Math.PI, false);
+        context.fillStyle =colors[(row+col+x)%colors.length];
+        context.fill();
+        context.lineWidth = 5;
+        context.strokeStyle = '#003300 ';
+        context.stroke();
+        x++;
+
+    }
+
+    // --></script>
+</head>
+
+<body >
+<script>
+
+</script>
+
+<canvas id="myCanvas" width="800" height="500">
+</canvas>
+
+</body>
+</html>

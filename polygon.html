@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Canvas Drawing Rectangles</title>
+    <script type="text/javascript"> <!--
+
+    window.addEventListener('load', function () {
+        // Step #1: Get the canvas element
+        var elem = document.getElementById('myCanvas');
+        if (!elem || !elem.getContext) {
+            return;
+        }
+        // Step #2: Get the canvas 2d context
+        var context = elem.getContext('2d');
+        if (!context) {
+            return;
+        }
+
+        var colors = ["#fff","#3498db"];
+
+
+        var x = 10, y=10, radius = 10, sides = 5;
+
+        function polygon(ctx, x, y, radius, sides, startAngle, anticlockwise) {
+            if (sides < 3) return;
+            var a = (Math.PI * 2)/sides;
+            a = anticlockwise?-a:a;
+            context.save();
+            context.translate(x,y);
+           // ctx.rotate(startAngle);
+            context.moveTo(radius,0);
+            for (var i = 1; i < sides; i++) {
+                context.fillStyle = "3498db";
+            }
+            context.lineTo(radius*Math.cos(a*i),radius*Math.sin(a*i));
+            }
+        context.closePath();
+        context.restore();
+        }
+
+
+
+    // --></script>
+</head>
+
+<body>
+<canvas id="myCanvas" width="1900" height="1600">
+</canvas>
+</body>
+</html>

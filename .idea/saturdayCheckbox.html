@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Canvas Drawing Rectangles</title>
+    <script type="text/javascript"> <!--
+
+    window.addEventListener('load', function () {
+        // Step #1: Get the canvas element
+        var elem = document.getElementById('myCanvas');
+        if (!elem || !elem.getContext) {
+            return;
+        }
+        // Step #2: Get the canvas 2d context
+        var context = elem.getContext('2d');
+        if (!context) {
+            return;
+        }
+        // Step #3: INSERT YOUR CANVAS CODE HERE
+        var rectWidth=100, rectHeight=100;
+
+        var basePointX =0 ;
+        var basePointY = 0 ;
+        var color="#f00" ;
+        var offsetX , rowCount=3, colCount=3;
+        var colors= ["#e74c3c", "#e67e22","#c0392b","#2980b9"];
+
+        var arrr = new Array(rowCount); // represents the state of the checkerboard
+
+         for(var x=0; x<rowCount; x++){ // initialize the array
+             arrr[x]=new Array(colCount);
+             for(var y=0; y<colCount; y++){
+                 arrr[x][y]= -1;
+                 //console.log("row "+x+" col "+y+ "initialize to -1");
+             }
+         }
+
+        var checkWin = function() {
+            var allEqual = true,leftMost=0;
+
+            // check if one row is identical
+            for(var row=0; row<rowCount; row++){
+                leftMost = arrr[row][0];
+                allEqual = true;
+
+                console.log("leftMost = "+leftMost);
+
+                if(leftMost == -1) {
+                    // this is an incomplete row that we do
+                    // not want to check because all -1 values
+                    // would produce a "false positive" result
+                    allEqual = false;
+                    continue
+                }
+
+                for(var col=0; col<colCount; col++) {
+                    //console.log("comparing row "+row+" column "+col);
+
+                    if (leftMost != arrr[row][col]) {
+                        allEqual = false;
+                        //console.log("mismatch in row " + row + " col " + col);
+                        //console.log("column " + col + " allEqual = " + allEqual);
+                        break;
+                    }
+                }
+
+                if(allEqual == true) {
+                    console.log("winner in row: "+row);
+                    return row;
+                }
+            }
+
+            /*
+            // check if one column is equal
+            for(var col=0; col<colCount; col++){
+                var topMost = arrr[col][0];
+                allEqual = true;
+
+                if(topMost == -1) {
+                // this is an incomplete row that we do
+                // not want to check because all -1 values
+                // would produce a "false positive" result
+                   return -1;
+                }
+
+                for(var row=0; row<rowCount; row++) {
+                    if (topMost != arrr[col][row]) {
+                        allEqual = false;
+                        break;
+                    }
+                }
+
+                // we found a winner
+                if(allEqual == true) {
+                    console.log("Winner in column " + col)
+                    return col;
+                }
+            }
+            */
+
+            // check main diagonal
+            var upperLeft = arrr[0][0];
+
+            if(upperLeft == -1) {
+                // this is an incomplete row that we do
+                // not want to check because all -1 values
+                // would produce a "false positive" result
+                return -1;
+            }
+
+            for(var col=0; col<colCount; col ++) {
+                if(upperLeft != arrr[col][col]) {
+                    allEqual = false;
+                }
+            }
+
+            if(allEqual == true) {
+                console.log("Winner in main diagonal")
+                return winner;
+            }
+
+            // check off diagonal
+            var upperRight = arrr[0][colCount-1];
+
+            if(upperRight == -1) {
+                // this is an incomplete row that we do
+                // not want to check because all -1 values
+                // would produce a "false positive" result
+
+                return -1;
+            }
+
+            for(var col=0; col<colCount; col ++) {
+                if(upperRight != arrr[col][colCount-col-1]) {
+                    allEqual = false;
+                }
+            }
+
+            if(allEqual == true) {
+                console.log("Winner in main diagonal")
+                return winner;
+            }
+
+            // no winner detected
+            return -1;
+        };
+
+        for(var j = 0 ; j<rowCount; j++){
+
+            offsetX = 0;
+            for(var i=0; i<colCount; i++) {
+
+                offsetX=i*rectWidth;
+                context.fillStyle= colors[(i+j)%colors.length];
+
+                context.fillRect(basePointX+offsetX,
+                                basePointY + rectHeight*j,
+                        rectWidth, rectHeight);
+             //   console.log(basePointX, basePointY, offsetX)
+            }
+        }
+        elem.addEventListener("mou" +
+                "sedown", mouseDown, false);
+
+        var player = 1;
+
+        function mouseDown(event) {
+            canvasX = event.pageX;
+            canvasY = event.pageY;
+            var row= (Math.floor(((canvasY-basePointY)/rectWidth))+1) ;
+            var col= (Math.floor(((canvasX-basePointX)/rectWidth))+1);
+
+            console.log( " Row:" + row +" Col: " + col);
+            //drawSmilingFace((col-1)*rectWidth+basePointY,(row-1)*rectHeight+basePointX,rectWidth/2, rectHeight/2);
+            //drawSmilingFace();
+            if(arrr[row-1][col-1] == -1){  // test if the space is free
+//                if(player){ // player 1
+//                    drawX((col-1)*rectWidth+basePointY,(row-1)*rectHeight+basePointX, rectWidth, row, col )
+//                } else { // player2
+//                    drawO((col-1)*rectWidth+basePointY,(row-1)*rectHeight+basePointX, rectWidth, row, col )
+//                }
+                  drawX((col-1)*rectWidth+basePointY,(row-1)*rectHeight+basePointX, rectWidth, row, col )
+
+                player=1-player;
+                if( checkWin() >= 0){
+
+                    //alert("You won")
+                };
+            }
+
+            // return ;
+        }
+
+
+        function drawX(xbase,ybase, wid, row , col ) {
+
+            var color = colors[(row+col+1)%colors.length];
+            context.fillStyle = color ;
+
+            //line goes left - right
+            context.beginPath();
+            context.moveTo((col-1)*rectWidth+basePointY,
+                            (row-1)*rectHeight+basePointX);
+            context.lineTo(((col-1)*rectWidth+basePointY) + rectWidth,
+                            ((row-1)*rectHeight+basePointX) + rectHeight);
+            context.stroke();
+
+            //line goes right - left
+            context.beginPath();
+            context.moveTo((col-1)*rectWidth+basePointY + rectWidth,
+                            (row-1)*rectHeight+basePointX);
+            context.lineTo(((col-1)*rectWidth+basePointY),
+                            ((row-1)*rectHeight+basePointX) + rectHeight);
+            context.stroke();
+
+            arrr[row-1][col-1] = 1;
+
+        }
+
+            var x = 0;
+            function drawO(xbase,ybase, wid, row , col ){
+                // fill shadow
+                var shadowColor = "#34495e ";
+                var shadowX=7, shadowY=7;
+                context.beginPath();
+                context.arc(xbase+shadowX+wid/2, shadowY+ybase+wid/2,(wid-shadowX)/3, 0, 2 * Math.PI, false);
+                context.fillStyle =shadowColor;
+                context.fill();
+                // fil original Circle
+                context.beginPath();
+                context.arc(xbase +wid/2, ybase+wid/2, (wid-shadowX)/3, 0, 2 * Math.PI, false);
+                context.fillStyle =colors[(row+col+x)%colors.length];
+                context.fill();
+               // context.lineWidth = 5;
+                context.strokeStyle = '#003300 ';
+                context.stroke();
+                x++;
+                console.log("drawO");
+
+                arrr[row-1][col-1] = 0;
+
+
+        }
+    });
+
+
+
+
+
+
+
+    // --></script>
+</head>
+
+<body>
+<canvas id="myCanvas" width="1900" height="1600">
+</canvas>
+</body>
+</html>

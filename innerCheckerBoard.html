@@ -17,8 +17,8 @@
             return;
         }
         // Step #3: INSERT YOUR CANVAS CODE HERE
-        var rectWidth=200, rectHeight=200;
-        var rectWidthTwo = 100, rectHeightTwo= 100;
+        var rectWidth=100, rectHeight=100;
+        var rectWidthTwo = 50, rectHeightTwo= 50;
 
         //context.fillStyle = "#f00";
         //context.fillRect(0,0, rectWidth,rectHeight);
@@ -32,9 +32,9 @@
         var basePointXtwo = 50;
         var basePointYtwo = 50;
         var color="#f00" ;
-        var offsetX , rowCount=2 , colCount=2;
-        var colors= ["#e74c3c", "#e67e22","#c0392b","#2980b9"];
-
+        var offsetX , rowCount=200 , colCount=200;
+        //var colors= ["#9b59b6","#e74c3c", "#e67e22","#c0392b","#2980b9","#2ecc71","#3498db"];
+        var colors = ["#fff","#3498db"]
 
 
 
@@ -50,10 +50,29 @@
                 context.fillRect(basePointX+offsetX,
                                 basePointY + rectHeight*j,
                         rectWidth, rectHeight);
-                context.fillStyle = "#000";
+                context.fillStyle = "#9b59b6";
                 context.fillRect(basePointX+ ( offsetX +.25*rectWidth),
                                 basePointY + (.25 * rectHeight) + rectHeight*j,
-                        rectWidth/2, rectHeight/2);
+                                rectWidth/2, rectHeight/2);
+                context.fillStyle = "#2ecc71";
+                context.fillRect(basePointX+ ( offsetX +.25*rectWidth),
+                                basePointY + (.25 * rectHeight) + rectHeight*j,
+                                rectWidth/4, rectHeight/4);
+
+
+                context.fillRect(basePointX+ ( offsetX +.50*rectWidth),
+                                basePointY + (.50 * rectHeight) + rectHeight*j,
+                                rectWidth/4, rectHeight/4);
+                context.fillRect(basePointX+ ( offsetX +.25*rectWidth),
+                                basePointY + (.25 * rectHeight) + rectHeight*j,
+                                rectWidth/4, rectHeight/4);
+                context.fillStyle = "#2ecc71";
+                context.fill();
+                context.beginPath();
+                context.arc(100, 75, 40, 0, 2 * Math.PI);
+                context.strokeStyle = '#1E854A';
+                context.stroke();
+
 
                 console.log(basePointX, basePointY, offsetX)
             }
@@ -69,6 +88,9 @@
             console.log("X: " + canvasX + " Y: " + canvasY);
         }
     });
+
+
+
     // --></script>
 </head>
 
